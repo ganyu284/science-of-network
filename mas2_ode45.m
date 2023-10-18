@@ -9,7 +9,7 @@ D=diag(sum(A,2));%利用Laplacian 行和为0构造D矩阵
 L=D-A;%利用定义求出Laplacian矩阵
 u0=-(L*X0+gamma*L*V0);%u0初值
 options = odeset('MaxStep', 1e-2, 'RelTol',1e-2,'AbsTol',1e-4);
-[t,y] = ode45(@odefun,[0 15],[X0;V0;u0],options);
+[t,y] = ode45(@odefun,[0 5],[X0;V0;u0],options);
 X=y(:,1:6);
 V=y(:,7:12);
 u=y(:,13:18);
@@ -17,18 +17,21 @@ u=y(:,13:18);
 figure(1);
 plot(t,X)
 title('status diagram');
-xlabel('time');
-ylabel('status');
+xlabel('time(s)');
+ylabel('status(m)');
+legend
 figure(2);
 plot(t,V)
 title('velocity diagram');
-xlabel('time');
-ylabel('velocity');
+xlabel('time(s)');
+ylabel('velocity(m/s)');
+legend
 figure(3)
 plot(t,u)
 title('acc diagram');
-xlabel('time');
-ylabel('u');
+xlabel('time(s)');
+ylabel('u(m^2/s)');
+legend
 %函数部分
 function dydt = odefun(t,y)
 dydt = zeros(12,1);% 指定dydt为微分方程变量的导数，dydt代表（x1，x2，x3，x4，v1，v2，v3，v4，u1，u2，u3，u4）^T的导数，y代表
